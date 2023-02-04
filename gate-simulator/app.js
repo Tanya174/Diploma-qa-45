@@ -8,7 +8,7 @@ console.log(data);
 const server = express();
 server.use(express.json());
 
-server.post(['/payment', '/credit'], (req, res) => {
+server.post(['/credit', '/payment'], (req, res) => {
   console.log(`Incoming request: ${req.path} ${JSON.stringify(req.body)}`);
   const {body: {number}} = req;
 
