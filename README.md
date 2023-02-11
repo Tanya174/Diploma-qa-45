@@ -13,15 +13,15 @@
 
 ##### 4) Запустить приложение через следующие команды:
 
-         а. На базе данных MySQL: java -jar aqa-shop.jar -P:jdbc.url=jdbc:mysql://localhost:3306/app -P:jdbc.user=app -P:jdbc.password=pass
+         а. На базе данных MySQL: java -jar aqa-shop.jar -D:spring.datasource.url=jdbc:mysql://localhost:3306/app
 
-         б. На базе данных PostgreSQL: java -jar aqa-shop.jar -P:jdbc.url=jdbc:postgresql://localhost:5432/app -P:jdbc.user=app -P:jdbc.password=pass
+         б. На базе данных PostgreSQL: java -jar aqa-shop.jar -D:spring.datasource.url=jdbc.url=jdbc:postgresql://localhost:5432/app 
 
 ##### 5) Запустить авто-тесты через следующие команды:
 
-         а. На базе данных MySQL: .\gradlew test -P:jdbc.url=jdbc:mysql://localhost:3306/app -P:jdbc.user=app -P:jdbc.password=pass
+         а. На базе данных MySQL: .\gradlew test -Ddb.url=jdbc:mysql://localhost:3306/app
 
-         б. На базе данных PostgreSQL: .\gradlew test -P:jdbc.url=jdbc:postgresql://localhost:5432/app -P:jdbc.user=app -P:jdbc.password=pass
+         б. На базе данных PostgreSQL: .\gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app 
 
 ##### 6) Сформировать отчет с использованием Allure через команду: 
          .\gradlew allureReport
