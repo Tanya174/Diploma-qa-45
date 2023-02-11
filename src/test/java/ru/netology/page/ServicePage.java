@@ -1,7 +1,6 @@
 package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
-import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import java.sql.DriverManager;
@@ -14,8 +13,7 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static java.lang.System.*;
 import static java.lang.System.getProperty;
 
@@ -28,11 +26,14 @@ public class ServicePage {
     private static String password = getProperty("app.password");
 
     List<SelenideElement> input = $$(".input__control");
+    SelenideElement successMessage;
+    SelenideElement errorMessage;
     SelenideElement cardNumber = input.get(0);
     SelenideElement month = input.get(1);
     SelenideElement year = input.get(2);
     SelenideElement cardOwner = input.get(3);
     SelenideElement cvcCvcNumber = input.get(4);
+
 
     public void buyForMoney() {
         open("http://localhost:8090", ServicePage.class);
@@ -45,13 +46,12 @@ public class ServicePage {
         $$(".button__content").find(exactText("Купить в кредит")).click();
         $$(".heading_theme_alfa-on-white").find(exactText("Кредит по данным карты")).shouldBe(visible);
     }
-
     public void verifySuccessMessage() {
-        $$(".notification__title").find(exactText("Успешно")).waitUntil(visible, 15000);
+        successMessage.$$(".notification__title").find(exactText("Успешно")).shouldBe(visible);
     }
 
     public void verifyErrorMessage() {
-        $$(".notification__title").find(exactText("Ошибка")).waitUntil(visible, 15000);
+        errorMessage.$$(".notification__title").find(exactText("Ошибка")).shouldBe(visible);
     }
 
     public void verifyWrongFormatMessage() {

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
+import ru.netology.data.DataGenerator;
 import ru.netology.data.SQLHelper;
 import ru.netology.data.Status;
 import ru.netology.page.ServicePage;
@@ -35,9 +36,9 @@ public class PaymentByCreditTest {
     @DisplayName("Покупка по активной карте в кредит, валидные данные")
     void shouldBePaidByApprovedCardByCredit() throws SQLException {
         servicePage.buyOnCredit();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(String.valueOf(DataGenerator.generateMonth()));
+        servicePage.setYear(String.valueOf(DataGenerator.generateYear()));
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -48,7 +49,7 @@ public class PaymentByCreditTest {
     @DisplayName("Покупка по неактивной карте в кредит, валидные данные")
     void shouldNotPaidByDeclinedCardByCredit() throws SQLException {
         servicePage.buyOnCredit();
-        servicePage.setCardNumber("4444444444444442");
+        servicePage.setCardNumber(DataGenerator.getDeclinedCardInfo().getCardNumber());
         servicePage.setMonth("08");
         servicePage.setYear("23");
         servicePage.setCardOwner("Ivan Ivanov");

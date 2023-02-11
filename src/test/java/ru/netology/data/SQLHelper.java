@@ -3,6 +3,7 @@ package ru.netology.data;
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,26 +17,26 @@ public class SQLHelper {
 
 
     public static void clearAllData() throws SQLException {
-        val runner = new QueryRunner();
-        val conn = DriverManager.getConnection(url, userDB, password);
+        var runner = new QueryRunner();
+        var conn = DriverManager.getConnection(url, userDB, password);
         runner.update(conn, "DELETE FROM credit_request_entity;");
         runner.update(conn, "DELETE FROM payment_entity;");
         runner.update(conn, "DELETE FROM order_entity;");
     }
 
     public static void checkPaymentStatus(Status status) throws SQLException {
-        val runner = new QueryRunner();
-        val conn = DriverManager.getConnection(url, userDB, password);
-        val paymentDataSQL = "SELECT status FROM payment_entity;";
-        val payment = runner.query(conn, paymentDataSQL, new BeanHandler<>(PaymentStatus.class));
+        var runner = new QueryRunner();
+        var conn = DriverManager.getConnection(url, userDB, password);
+        var paymentDataSQL = "SELECT status FROM payment_entity;";
+        var payment = runner.query(conn, paymentDataSQL, new BeanHandler<>(PaymentStatus.class));
         assertEquals(status, payment.status);
     }
 
     public static void checkCreditStatus(Status status) throws SQLException {
-        val runner = new QueryRunner();
-        val conn = DriverManager.getConnection(url, userDB, password);
-        val creditDataSQL = "SELECT status FROM credit_request_entity;";
-        val credit = runner.query(conn, creditDataSQL, new BeanHandler<>(CreditStatus.class));
+        var runner = new QueryRunner();
+        var conn = DriverManager.getConnection(url, userDB, password);
+        var creditDataSQL = "SELECT status FROM credit_request_entity;";
+        var credit = runner.query(conn, creditDataSQL, new BeanHandler<>(CreditStatus.class));
         assertEquals(status, credit.status);
     }
 }
