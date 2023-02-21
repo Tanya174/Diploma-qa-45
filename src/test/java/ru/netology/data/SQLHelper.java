@@ -24,20 +24,20 @@ public class SQLHelper {
         runner.update(conn, "DELETE FROM order_entity;");
     }
 
-    public static void checkPaymentStatus(Status status) throws SQLException {
+    public static void checkPaymentStatus(Status expectedStatus) throws SQLException {
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
         var paymentDataSQL = "SELECT status FROM payment_entity;";
-        var payment = runner.query(conn, paymentDataSQL, new BeanHandler<>(PaymentStatus.class));
-        assertEquals(status, payment.status);
+        var payment = runner.query(conn, paymentDataSQL, new ScalarHandler<String>(String.valueOf(PaymentStatus.class)));
+        assertEquals(expectedStatus.getName(), payment);
     }
 
-    public static void checkCreditStatus(Status status) throws SQLException {
+    public static void checkCreditStatus(Status expectedStatus) throws SQLException {
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
         var creditDataSQL = "SELECT status FROM credit_request_entity;";
-        var credit = runner.query(conn, creditDataSQL, new BeanHandler<>(CreditStatus.class));
-        assertEquals(status, credit.status);
+        var credit = runner.query(conn, creditDataSQL, new ScalarHandler<String>(String.valueOf(CreditStatus.class)));
+        assertEquals(expectedStatus.getName(), credit);
     }
 }
 

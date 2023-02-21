@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
+import ru.netology.data.DataGenerator;
 import ru.netology.data.SQLHelper;
 import ru.netology.data.Status;
 import ru.netology.page.ServicePage;
@@ -36,9 +37,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по активной карте, валидные данные")
     void shouldBePaidByApprovedCard() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -49,9 +50,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по неактивной карте, валидные данные")
     void shouldNotPaidByDeclinedCard() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444442");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getDeclinedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -63,8 +64,8 @@ public class PaymentByMoneyTest {
     void shouldNotPaidByUnknownCard() throws SQLException {
         servicePage.buyForMoney();
         servicePage.setCardNumber("7777 7777 7777 7777");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -76,8 +77,8 @@ public class PaymentByMoneyTest {
     void shouldNotPaidByInvalidCardNumber() throws SQLException {
         servicePage.buyForMoney();
         servicePage.setCardNumber("7777 SSSS 7777 SSSS");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -88,9 +89,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c невалидным номером месяца")
     void shouldNotPaidByInvalidMonth() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("18");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth("44");
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -101,9 +102,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c невалидным номером года")
     void shouldNotPaidByInvalidYear() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("22");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear("99");
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -114,9 +115,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c невалидным владельцем")
     void shouldNotPaidByInvalidCardOwner() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Иванов Иван 1-ый");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -127,9 +128,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c невалидным CVV")
     void shouldNotPaidByInvalidCVV() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("77");
         servicePage.pushСontinueButton();
@@ -141,8 +142,8 @@ public class PaymentByMoneyTest {
     void shouldNotPaidByEmptyCardNumber() throws SQLException {
         servicePage.buyForMoney();
         servicePage.setCardNumber("");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -153,9 +154,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c пустым номером месяца")
     void shouldNotPaidByEmptyMonth() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth("");
-        servicePage.setYear("23");
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -166,8 +167,8 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c пустым номером года")
     void shouldNotPaidByEmptyYearField() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
         servicePage.setYear("");
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
@@ -179,9 +180,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c пустым полем владелец")
     void shouldNotPaidByEmptyCardOwner() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -192,9 +193,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по карте c пустым полем CVV")
     void shouldNoPayEmptyCVV() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("");
         servicePage.pushСontinueButton();
@@ -206,9 +207,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по активной карте, валидные данные, проверка записи данных в БД")
     void shouldPaidByApprovedCardStatusInDB()  throws SQLException{
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444441");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
@@ -220,9 +221,9 @@ public class PaymentByMoneyTest {
     @DisplayName("Покупка по неактивной карте, валидные данные, проверка записи данных в БД")
     void shouldPaidByDeclinedCardStatusInDB() throws SQLException {
         servicePage.buyForMoney();
-        servicePage.setCardNumber("4444444444444442");
-        servicePage.setMonth("08");
-        servicePage.setYear("23");
+        servicePage.setCardNumber(DataGenerator.getDeclinedCardInfo().getCardNumber());
+        servicePage.setMonth(DataGenerator.generateMonth());
+        servicePage.setYear(DataGenerator.generateYear());
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
