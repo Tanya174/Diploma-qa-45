@@ -35,7 +35,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по активной карте, валидные данные")
-    void shouldBePaidByApprovedCard() throws SQLException {
+    void shouldBePaidByApprovedCard(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -48,7 +48,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по неактивной карте, валидные данные")
-    void shouldNotPaidByDeclinedCard() throws SQLException {
+    void shouldNotPaidByDeclinedCard(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getDeclinedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -61,7 +61,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте не из двух предложенных, валидные данные")
-    void shouldNotPaidByUnknownCard() throws SQLException {
+    void shouldNotPaidByUnknownCard(){
         servicePage.buyForMoney();
         servicePage.setCardNumber("7777 7777 7777 7777");
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -74,7 +74,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c невалидным номером карты")
-    void shouldNotPaidByInvalidCardNumber() throws SQLException {
+    void shouldNotPaidByInvalidCardNumber(){
         servicePage.buyForMoney();
         servicePage.setCardNumber("7777 SSSS 7777 SSSS");
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -87,7 +87,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c невалидным номером месяца")
-    void shouldNotPaidByInvalidMonth() throws SQLException {
+    void shouldNotPaidByInvalidMonth(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth("44");
@@ -100,7 +100,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c невалидным номером года")
-    void shouldNotPaidByInvalidYear() throws SQLException {
+    void shouldNotPaidByInvalidYear(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -108,12 +108,12 @@ public class PaymentByMoneyTest {
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
-        servicePage.verifyWrongYearMessage();
+        servicePage.verifyWrongDateMessage();
     }
 
     @Test
     @DisplayName("Покупка по карте c невалидным владельцем")
-    void shouldNotPaidByInvalidCardOwner() throws SQLException {
+    void shouldNotPaidByInvalidCardOwner(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -126,7 +126,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c невалидным CVV")
-    void shouldNotPaidByInvalidCVV() throws SQLException {
+    void shouldNotPaidByInvalidCVV(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -139,7 +139,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c пустым номером")
-    void shouldNotPaidByEmptyCardNumber() throws SQLException {
+    void shouldNotPaidByEmptyCardNumber(){
         servicePage.buyForMoney();
         servicePage.setCardNumber("");
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -152,7 +152,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c пустым номером месяца")
-    void shouldNotPaidByEmptyMonth() throws SQLException {
+    void shouldNotPaidByEmptyMonth(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth("");
@@ -165,7 +165,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c пустым номером года")
-    void shouldNotPaidByEmptyYearField() throws SQLException {
+    void shouldNotPaidByEmptyYearField(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -178,7 +178,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c пустым полем владелец")
-    void shouldNotPaidByEmptyCardOwner() throws SQLException {
+    void shouldNotPaidByEmptyCardOwner(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -191,7 +191,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по карте c пустым полем CVV")
-    void shouldNoPayEmptyCVV() throws SQLException {
+    void shouldNoPayEmptyCVV(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -205,7 +205,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по активной карте, валидные данные, проверка записи данных в БД")
-    void shouldPaidByApprovedCardStatusInDB()  throws SQLException{
+    void shouldPaidByApprovedCardStatusInDB(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getApprovedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());
@@ -219,7 +219,7 @@ public class PaymentByMoneyTest {
 
     @Test
     @DisplayName("Покупка по неактивной карте, валидные данные, проверка записи данных в БД")
-    void shouldPaidByDeclinedCardStatusInDB() throws SQLException {
+    void shouldPaidByDeclinedCardStatusInDB(){
         servicePage.buyForMoney();
         servicePage.setCardNumber(DataGenerator.getDeclinedCardInfo().getCardNumber());
         servicePage.setMonth(DataGenerator.generateMonth());

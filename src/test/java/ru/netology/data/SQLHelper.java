@@ -1,5 +1,6 @@
 package ru.netology.data;
 
+import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -15,28 +16,28 @@ public class SQLHelper {
     private static String userDB = System.getProperty("app.userDB");
     private static String password = System.getProperty("app.password");
 
-
-    public static void clearAllData() throws SQLException {
+    @SneakyThrows
+    public static void clearAllData(){
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
         runner.update(conn, "DELETE FROM credit_request_entity;");
         runner.update(conn, "DELETE FROM payment_entity;");
         runner.update(conn, "DELETE FROM order_entity;");
     }
-
-    public static void checkPaymentStatus(Status expectedStatus) throws SQLException {
+    @SneakyThrows
+    public static void checkPaymentStatus(Status expectedStatus){
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
         var paymentDataSQL = "SELECT status FROM payment_entity;";
-        var payment = runner.query(conn, paymentDataSQL, new ScalarHandler<String>(String.valueOf(PaymentStatus.class)));
+        var payment = runner.query(conn, paymentDataSQL, new ScalarHandler<String>());
         assertEquals(expectedStatus.getName(), payment);
     }
-
-    public static void checkCreditStatus(Status expectedStatus) throws SQLException {
+    @SneakyThrows
+    public static void checkCreditStatus(Status expectedStatus){
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
         var creditDataSQL = "SELECT status FROM credit_request_entity;";
-        var credit = runner.query(conn, creditDataSQL, new ScalarHandler<String>(String.valueOf(CreditStatus.class)));
+        var credit = runner.query(conn, creditDataSQL, new ScalarHandler<String>());
         assertEquals(expectedStatus.getName(), credit);
     }
 }

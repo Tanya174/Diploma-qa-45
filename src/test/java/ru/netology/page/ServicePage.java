@@ -48,10 +48,12 @@ public class ServicePage {
     }
     public void verifySuccessMessage() {
         successMessage.$$(".notification__title").find(exactText("Успешно")).shouldBe(visible);
+        Duration.ofSeconds(15);
     }
 
     public void verifyErrorMessage() {
         errorMessage.$$(".notification__title").find(exactText("Ошибка")).shouldBe(visible);
+        Duration.ofSeconds(15);
     }
 
     public void verifyWrongFormatMessage() {
