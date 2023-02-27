@@ -13,9 +13,9 @@
 
 ##### 4) Запустить приложение через следующие команды:
 
-         а. На базе данных MySQL: java -jar aqa-shop.jar -D:spring.datasource.url=jdbc:mysql://localhost:3306/app
+         а. На базе данных MySQL: java -jar aqa-shop.jar -Dspring.datasource.url=jdbc:mysql://localhost:3306/app
 
-         б. На базе данных PostgreSQL: java -jar aqa-shop.jar -D:spring.datasource.url=jdbc.url=jdbc:postgresql://localhost:5432/app 
+         б. На базе данных PostgreSQL: java -jar aqa-shop.jar -Dspring.datasource.url=jdbc.url=jdbc:postgresql://localhost:5432/app 
 
 ##### 5) Запустить авто-тесты через следующие команды:
 
