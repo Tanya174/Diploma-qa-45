@@ -19,12 +19,6 @@ import static java.lang.System.getProperty;
 
 public class ServicePage {
 
-    private static String url = getProperty("db.url");
-    private static String appURL = getProperty("app.url");
-    private static String appPORT = getProperty("app.port");
-    private static String userDB = getProperty("app.userDB");
-    private static String password = getProperty("app.password");
-
     List<SelenideElement> input = $$(".input__control");
     SelenideElement successMessage;
     SelenideElement errorMessage;
@@ -47,13 +41,11 @@ public class ServicePage {
         $$(".heading_theme_alfa-on-white").find(exactText("Кредит по данным карты")).shouldBe(visible);
     }
     public void verifySuccessMessage() {
-        successMessage.$$(".notification__title").find(exactText("Успешно")).shouldBe(visible);
-        Duration.ofSeconds(15);
+        $$(".notification__title").find(exactText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public void verifyErrorMessage() {
-        errorMessage.$$(".notification__title").find(exactText("Ошибка")).shouldBe(visible);
-        Duration.ofSeconds(15);
+        $$(".notification__title").find(exactText("Ошибка")).shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public void verifyWrongFormatMessage() {

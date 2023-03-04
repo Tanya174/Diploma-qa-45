@@ -225,7 +225,7 @@ public class PaymentByCreditTest {
         servicePage.setCardOwner("Ivan Ivanov");
         servicePage.setCvcCvcNumber("999");
         servicePage.pushСontinueButton();
-        servicePage.verifyWrongFormatMessage();
+        servicePage.verifyErrorMessage();
         SQLHelper.checkCreditStatus(Status.DECLINED);
     }
 }
