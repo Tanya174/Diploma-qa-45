@@ -19,9 +19,9 @@
 
 ##### 5) Запустить авто-тесты через следующие команды:
 
-         а. На базе данных MySQL: .\gradlew test -Durl=jdbc:mysql://localhost:3306/app
+         а. На базе данных MySQL: .\gradlew test -Dmysql://localhost:3306/app
 
-         б. На базе данных PostgreSQL: .\gradlew test -Durl=jdbc:postgresql://localhost:5432/app 
+         б. На базе данных PostgreSQL: .\gradlew test -Dpostgresql://localhost:5432/app 
 
 ##### 6) Сформировать отчет с использованием Allure через команду: 
          .\gradlew allureReport
